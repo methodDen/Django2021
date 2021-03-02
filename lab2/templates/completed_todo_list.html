@@ -1,0 +1,22 @@
+{%  extends "layout.html" %}
+{% block body %}
+    <h1>Tasks in List1</h1>
+    <table>
+        <tr>
+            <th>Task</th>
+            <th>Created</th>
+            <th>Due on</th>
+            <th>Owner</th>
+            <th>Mark</th>
+        </tr>
+        {% for task in tasks %}
+            <tr>
+                <td><a href="{% url 'completed_task' task.id %}">{{ task.name }}</a></td>
+                <td>{{ task.dateOfCreation|date:'d/m/Y' }}</td>
+                <td>{{ task.deadlineDate|date:'d/m/Y' }}</td>
+                <td>{{ task.ownerName }}</td>
+                <td> <p id="donornot">Done</p></td>
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
