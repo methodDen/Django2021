@@ -2,7 +2,18 @@ from django.db import models
 
 # Create your models here.
 
+
+class TodoList(models.Model):
+    name = models.CharField(max_length=255, null=False, blank=False, verbose_name="Название списка")
+    dateOfCreation = models.DateField(verbose_name="Дата Создания")
+
+    class Meta:
+        verbose_name = "Список Заданий"
+        verbose_name_plural = "Списки Заданий"
+
+
 class Task(models.Model):
+    todoList = models.ForeignKey(TodoList, on_delete=models.CASCADE, related_name="tasks", verbose_name="Задания списка")
     name = models.CharField(max_length=255, null=False, blank=False, verbose_name="Название")
     dateOfCreation = models.DateField(verbose_name="Дата создания")
     deadlineDate = models.DateField(verbose_name="Дедлайн")

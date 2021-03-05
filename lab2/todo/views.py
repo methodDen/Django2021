@@ -1,31 +1,22 @@
 from django.shortcuts import render
-from .models import Task
+from .models import Task, TodoList
 
 # Create your views here.
 
 
-def uncompleted_list_show(request):
+def uncompleted_list_show(request, list_id):
+    toDo = TodoList.objects.get(pk=list_id)
     return render(request, "todo_list.html", {
-        "tasks": Task.objects.filter(mark=False)
+        "name": toDo.name,
+        "tasks": toDo.tasks.filter(mark=False)
     })
 
 
-def completed_list_show(request):
+def completed_list_show(request, list_id):
+    toDo = TodoList.objects.get(pk=list_id)
     return render(request, "completed_todo_list.html", {
-        "tasks": Task.objects.filter(mark=True)
-    })
-
-
-def completed_task(request, task_id):
-    task = Task.objects.get(pk=task_id)
-    return render(request, "completed.html", {
-        "task": task
-    })
-
-def uncompleted_task(request, task_id):
-    task = Task.objects.get(pk=task_id)
-    return render(request, "uncompleted.html", {
-        "task": task
+        "name": toDo.name,
+        "tasks": toDo.tasks.filter(mark=True)
     })
 
 
